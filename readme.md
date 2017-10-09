@@ -7,6 +7,18 @@
 ## Run with:
     $ docker-compose up
 
+* Destroy
+
+      $ ./dev.sh remove
+
+* Container Up
+
+      $ ./dev.sh start
+
+* Bash join
+
+      $ ./dev.sh bash
+    
 ## Reminding:
     $ docker ps -a
     $ docker start id
