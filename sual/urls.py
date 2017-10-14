@@ -3,11 +3,12 @@ from django.contrib import admin
 from rest_framework import routers
 from profiles import views
 
-router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet)
+
+api_urls = [
+    url(r'^users/', include('profiles.urls', namespace='users')),
+]
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    url(r'^api/', include(api_urls)),
 ]
