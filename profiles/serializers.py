@@ -24,7 +24,7 @@ class UserLoginSerializer(serializers.Serializer):
 
     default_error_messages = {
         'inactive_account': _('User account is disabled.'),
-        'invalid_credentials': _('Unable to login with provided credentials.')
+        'invalid_credentials': _('User not found!')
     }
 
     def __init__(self, *args, **kwargs):
