@@ -50,6 +50,5 @@ class UserLoginAPIView(GenericAPIView):
 class UserLogoutAPIView(APIView):
 
     def post(self, request, *args, **kwargs):
-        print(request)
         Token.objects.filter(user=request.user).delete()
         return Response(status=status.HTTP_200_OK)
