@@ -1,6 +1,8 @@
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
 from django.utils.translation import ugettext_lazy as _
+
 
 from rest_framework import serializers
 from rest_framework.authtoken.models import Token
@@ -15,7 +17,13 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         fields = ("id", "username", "email", "password",)
 
     def create(self, validated_data):
-        return super(UserRegistrationSerializer, self).create(validated_data)
+        if validated_data.get('password'):
+            validated_data['password'] = make_password(
+                validated_data['password']
+            )
+        user = get_user_model().objects.create(**validated_data)
+
+        return user
 
 
 class UserLoginSerializer(serializers.Serializer):
@@ -33,6 +41,7 @@ class UserLoginSerializer(serializers.Serializer):
 
     def validate(self, attrs):
         self.user = authenticate(username=attrs.get("username"), password=attrs.get('password'))
+        print(self.user)
         if self.user:
             if not self.user.is_active:
                 raise serializers.ValidationError(self.error_messages['inactive_account'])
