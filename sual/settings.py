@@ -112,12 +112,6 @@ AUTH_PASSWORD_VALIDATORS = [
 # DRF 
 
 REST_FRAMEWORK = {
-<<<<<<< Updated upstream
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAdminUser',
-    ],
-    'PAGE_SIZE': 10
-=======
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
     ),
@@ -125,7 +119,6 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
     'TEST_REQUEST_DEFAULT_FORMAT': 'json',
->>>>>>> Stashed changes
 }
 
 # Internationalization
