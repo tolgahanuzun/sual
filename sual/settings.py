@@ -41,11 +41,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'profiles',
     'corsheaders',
-<<<<<<< Updated upstream
-=======
     'questions',
     'django_extensions',
->>>>>>> Stashed changes
 ]
 
 MIDDLEWARE = [
