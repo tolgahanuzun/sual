@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'profiles',
     'corsheaders',
     'questions',
-    'answers'
+    'answers',
     'django_extensions',
 ]
 
