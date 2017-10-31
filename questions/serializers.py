@@ -16,3 +16,12 @@ class QuestionsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Questions
         fields = ("user", "body", "date_created")
+
+
+class AnswersSerializer(serializers.ModelSerializer):
+    owner = UserSerializer(read_only=True)
+    question = QuestionsSerializer(read_only=True)
+
+    class Meta:
+        model = Questions
+        fields = ("owner", "question", "body", "date_created")
