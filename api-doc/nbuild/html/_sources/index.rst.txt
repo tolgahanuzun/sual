@@ -12,6 +12,7 @@ Contents:
 
         Profile <profile.rst>
         Question <question.rst>
+        Answer <answer.rst>
 
 
 Indices and tables
