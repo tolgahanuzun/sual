@@ -1,7 +1,7 @@
 Profile
 *********
 
-The resource for liking objects. There are multiple endpoints for different object types.
+Profile endpoints list.
 
 Endpoints:
     * /api/users/
@@ -54,31 +54,26 @@ Example Request::
 
 Response::
 
-    HTTP 200: Ok
+    HTTP 200 OK
 
     {
-        "count": 1,
-        "next": null,
-        "previous": null,
-        "results": [{
-            "id": 4,
-            "full_name": "Justine Lorean",
-            "first_name": "Justine",
-            "small_avatar": null,
-        }]
+        "auth_token": "a48dd86719fd289e7b58cb8ef776fa495ac5c358"
     }
 
 Logout
 -----------------
 
-Method: **GET**
+Method: **POST**
 
 Endpoint: /api/users/logout/
 
 Example Request::
 
-    GET: /api/users/logout/
-
+    POST: /api/users/logout/
+    
+    Header:[{"key":"Authorization","value":"Token 5e4d6253cb7b9b19f7c8dd499c4385bb01bd4822"},
+            {"key":"Content-Type","value":"application/json"}]
+    
 Response::
 
-    HTTP 204: No Content
+    HTTP 200: OK

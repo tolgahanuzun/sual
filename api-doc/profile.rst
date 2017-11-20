@@ -54,16 +54,16 @@ Example Request::
 
 Response::
 
-HTTP 200 OK
+    HTTP 200 OK
 
-{
-    "auth_token": "a48dd86719fd289e7b58cb8ef776fa495ac5c358"
-}
+    {
+        "auth_token": "a48dd86719fd289e7b58cb8ef776fa495ac5c358"
+    }
 
 Logout
 -----------------
 
-Method: **GET**
+Method: **POST**
 
 Endpoint: /api/users/logout/
 

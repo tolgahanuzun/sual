@@ -42,7 +42,7 @@
             
   <div class="section" id="profile">
 <h1>Profile<a class="headerlink" href="#profile" title="Permalink to this headline">¶</a></h1>
-<p>The resource for liking objects. There are multiple endpoints for different object types.</p>
+<p>Profile endpoints list.</p>
 <dl class="docutils">
 <dt>Endpoints:</dt>
 <dd><ul class="first last simple">
@@ -92,32 +92,27 @@
 </pre></div>
 </div>
 <p>Response:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">HTTP</span> <span class="mi">200</span><span class="p">:</span> <span class="n">Ok</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">HTTP</span> <span class="mi">200</span> <span class="n">OK</span>
 
 <span class="p">{</span>
-    <span class="s2">&quot;count&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="s2">&quot;next&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
-    <span class="s2">&quot;previous&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
-    <span class="s2">&quot;results&quot;</span><span class="p">:</span> <span class="p">[{</span>
-        <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
-        <span class="s2">&quot;full_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Justine Lorean&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;first_name&quot;</span><span class="p">:</span> <span class="s2">&quot;Justine&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;small_avatar&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
-    <span class="p">}]</span>
+    <span class="s2">&quot;auth_token&quot;</span><span class="p">:</span> <span class="s2">&quot;a48dd86719fd289e7b58cb8ef776fa495ac5c358&quot;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="logout">
 <h2>Logout<a class="headerlink" href="#logout" title="Permalink to this headline">¶</a></h2>
-<p>Method: <strong>GET</strong></p>
+<p>Method: <strong>POST</strong></p>
 <p>Endpoint: /api/users/logout/</p>
 <p>Example Request:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">GET</span><span class="p">:</span> <span class="o">/</span><span class="n">api</span><span class="o">/</span><span class="n">users</span><span class="o">/</span><span class="n">logout</span><span class="o">/</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">POST</span><span class="p">:</span> <span class="o">/</span><span class="n">api</span><span class="o">/</span><span class="n">users</span><span class="o">/</span><span class="n">logout</span><span class="o">/</span>
+
+<span class="n">Header</span><span class="p">:[{</span><span class="s2">&quot;key&quot;</span><span class="p">:</span><span class="s2">&quot;Authorization&quot;</span><span class="p">,</span><span class="s2">&quot;value&quot;</span><span class="p">:</span><span class="s2">&quot;Token 5e4d6253cb7b9b19f7c8dd499c4385bb01bd4822&quot;</span><span class="p">},</span>
+        <span class="p">{</span><span class="s2">&quot;key&quot;</span><span class="p">:</span><span class="s2">&quot;Content-Type&quot;</span><span class="p">,</span><span class="s2">&quot;value&quot;</span><span class="p">:</span><span class="s2">&quot;application/json&quot;</span><span class="p">}]</span>
 </pre></div>
 </div>
 <p>Response:</p>
-<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">HTTP</span> <span class="mi">204</span><span class="p">:</span> <span class="n">No</span> <span class="n">Content</span>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">HTTP</span> <span class="mi">200</span><span class="p">:</span> <span class="n">OK</span>
 </pre></div>
 </div>
 </div>
