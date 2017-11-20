@@ -4,20 +4,20 @@ Question
 Question endpoints list.
 
 Endpoints:
-    * /api/questions/
-    * /api/questions/me/
-    * /api/questions/<id>/
+    * /api/question/
+    * /api/question/me/
+    * /api/question/<id>/
 
 Crete
 --------------------------------------
 
 Method: **POST**
 
-Endpoint: /api/questions/
+Endpoint: /api/question/
 
 Example Request::
 
-    POST: /api/questions/
+    POST: /api/question/
 
     Header:[{"key":"Authorization","value":"Token 5e4d6253cb7b9b19f7c8dd499c4385bb01bd4822"},
         {"key":"Content-Type","value":"application/json"}]
@@ -37,7 +37,8 @@ Response::
             "date_joined": "2017-10-31T12:39:12.097455Z"
         },
         "body": "New questions",
-        "date_created": "2017-11-20T12:37:55.054243Z"
+        "date_created": "2017-11-20T12:37:55.054243Z",
+        "id": 3
     }
 
 List
@@ -45,11 +46,11 @@ List
 
 Method: **GET**
 
-Endpoint: /api/questions/
+Endpoint: /api/question/
 
 Example Request::
 
-    GET: /api/questions/
+    GET: /api/question/
     
     Header:[{"key":"Authorization","value":"Token 5e4d6253cb7b9b19f7c8dd499c4385bb01bd4822"},
             {"key":"Content-Type","value":"application/json"}]
@@ -67,7 +68,8 @@ Response::
                 "date_joined": "2017-10-31T12:39:12.097455Z"
             },
             "body": "Soru -1",
-            "date_created": "2017-10-31T13:09:35.500606Z"
+            "date_created": "2017-10-31T13:09:35.500606Z",
+            "id": 1
         },
         {
             "user": {
@@ -77,8 +79,20 @@ Response::
                 "date_joined": "2017-10-31T12:40:25.664074Z"
             },
             "body": "Soru -2",
-            "date_created": "2017-10-31T13:09:47.363813Z"
-        }
+            "date_created": "2017-10-31T13:09:47.363813Z",
+            "id": 2
+        },
+        {
+        "user": {
+            "id": 1,
+            "username": "tolgahan",
+            "email": "2@1.com",
+            "date_joined": "2017-10-31T12:39:12.097455Z"
+        },
+        "body": "New questions",
+        "date_created": "2017-11-20T12:37:55.054243Z",
+        "id": 3
+    }
     ]
 
 List Me
@@ -86,11 +100,11 @@ List Me
 
 Method: **GET**
 
-Endpoint: /api/questions/me/
+Endpoint: /api/question/me/
 
 Example Request::
 
-    GET: /api/questions/me/
+    GET: /api/question/me/
 
     Header:[{"key":"Authorization","value":"Token 5e4d6253cb7b9b19f7c8dd499c4385bb01bd4822"},
         {"key":"Content-Type","value":"application/json"}]
@@ -109,7 +123,8 @@ Response::
                 "date_joined": "2017-10-31T12:39:12.097455Z"
             },
             "body": "New questions",
-            "date_created": "2017-11-20T12:37:55.054243Z"
+            "date_created": "2017-11-20T12:37:55.054243Z",
+            "id": 3
         },
         {
             "user": {
@@ -119,7 +134,8 @@ Response::
                 "date_joined": "2017-10-31T12:39:12.097455Z"
             },
             "body": "Soru -1",
-            "date_created": "2017-10-31T13:09:35.500606Z"
+            "date_created": "2017-10-31T13:09:35.500606Z",
+            "id": 1
         }
     ]
 
@@ -128,11 +144,11 @@ Detail
 
 Method: **GET**
 
-Endpoint: /api/questions/<id>/
+Endpoint: /api/question/<id>/
 
 Example Request::
 
-    GET: /api/questions/3/
+    GET: /api/question/3/
 
 Response::
 
@@ -146,5 +162,6 @@ Response::
             "date_joined": "2017-10-31T12:39:12.097455Z"
         },
         "body": "New questions",
-        "date_created": "2017-11-20T12:37:55.054243Z"
+        "date_created": "2017-11-20T12:37:55.054243Z",
+        "id": 3
     }
