@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from questions.models import Questions
+from questions.models import Questions, Answers
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -23,5 +23,5 @@ class AnswersSerializer(serializers.ModelSerializer):
     question = QuestionsSerializer(read_only=True)
 
     class Meta:
-        model = Questions
+        model = Answers
         fields = ("owner", "question", "body", "date_created","id")
