@@ -28,20 +28,15 @@ class QuestionsDetailAPIView(RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated, UserIsOwnerQuestions)
 
 
-class AnswersMeListAPIView(ListAPIView):
-    "its own objects"
+class AnswersListCreateAPIView(ListCreateAPIView):
     serializer_class = AnswersSerializer
 
     def get_queryset(self):
-        return Answers.objects.filter(user=self.request.user)
-
-
-class AnswersListCreateAPIView(ListCreateAPIView):
-    serializer_class = AnswersSerializer
-    queryset = Answers.objects.all()
+        return Answers.objects.filter(owner=self.request.user)
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        question = Questions.objects.get(id=self.request.data['question'])
+        serializer.save(owner=self.request.user, question=question)
 
 
 class AnswersDetailAPIView(RetrieveUpdateDestroyAPIView):
