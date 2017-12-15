@@ -27,7 +27,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         validated_data.pop('tittle'); validated_data.pop('company')
         user = get_user_model().objects.create(**validated_data)
         profile_user = UserProfile.objects.create(user=user, tittle=self.data['tittle'], company=self.data['company'])
-        
+
         return profile_user
 
 
@@ -63,12 +63,12 @@ class TokenSerializer(serializers.ModelSerializer):
         fields = ("auth_token",)
 
 
-
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
         fields = ("id", "username", "email", "date_joined")
+
 
 class QuestionsSerializer(serializers.ModelSerializer):
 
@@ -79,9 +79,8 @@ class QuestionsSerializer(serializers.ModelSerializer):
 
 class UserProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
-    
+
     class Meta:
         model = UserProfile
         fields = ("user", "company", "tittle")
         related_object = 'user'
-
