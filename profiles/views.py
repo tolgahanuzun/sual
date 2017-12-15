@@ -63,14 +63,18 @@ class UserLogoutAPIView(APIView):
 class UserGetAPI(APIView):
 
     def get(self, request, username):
-        
-        serializer_users = UserProfileSerializer(UserProfile.objects.filter(user__username=username),many=True)
+        serializer_users = UserProfileSerializer(UserProfile.objects.filter(user__username=username), many=True)
+        serializer_questions = QuestionsSerializer(Questions.objects.filter(user__username=username), many=True)
 
-        serializer_questions = QuestionsSerializer(Questions.objects.filter(user__username=username),many=True)
+        if serializer_users.data or False:
+            serializer = {'user_details':serializer_users.data[0], 'questions_details':serializer_questions.data[0]}
 
-        serializer = {'user_details':serializer_users.data[0], 'questions_details':serializer_questions.data[0]}
-        
-        return Response(
-            data=serializer,
-            status=status.HTTP_200_OK,
+            return Response(
+                data=serializer
+                #status=status.HTTP_200_OK,
+                )
+        else:
+            return Response(
+                data={'errors':'No members found.'},
+                status=status.HTTP_400_BAD_REQUEST,
             )
