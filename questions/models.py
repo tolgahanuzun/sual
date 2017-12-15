@@ -25,4 +25,4 @@ class Answers(models.Model):
     date_created = models.DateTimeField(verbose_name="Date Created", auto_now_add=True)
 
     def __str__(self):
-        return "%s" % (self.question)
+        return "%s" % (self.body)
