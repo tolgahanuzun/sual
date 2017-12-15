@@ -8,22 +8,27 @@ from rest_framework import serializers
 from rest_framework.authtoken.models import Token
 
 from profiles.models import UserProfile
+from questions.models import Questions
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
+    company = serializers.CharField(write_only=False)
+    tittle = serializers.CharField(write_only=False)
 
     class Meta:
         model = User
-        fields = ("id", "username", "email", "password",)
+        fields = ("id", "username", "email", "password", "tittle", "company")
 
     def create(self, validated_data):
         if validated_data.get('password'):
             validated_data['password'] = make_password(
                 validated_data['password']
             )
+        validated_data.pop('tittle'); validated_data.pop('company')
         user = get_user_model().objects.create(**validated_data)
-
-        return user
+        profile_user = UserProfile.objects.create(user=user, tittle=self.data['tittle'], company=self.data['company'])
+        
+        return profile_user
 
 
 class UserLoginSerializer(serializers.Serializer):
@@ -56,3 +61,27 @@ class TokenSerializer(serializers.ModelSerializer):
     class Meta:
         model = Token
         fields = ("auth_token",)
+
+
+
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ("id", "username", "email", "date_joined")
+
+class QuestionsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Questions
+        fields = ("id", "body", "date_created")
+
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    user = UserSerializer(read_only=True)
+    
+    class Meta:
+        model = UserProfile
+        fields = ("user", "company", "tittle")
+        related_object = 'user'
+
