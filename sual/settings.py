@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'questions',
     'django_extensions',
+    'uptopic',
 ]
 
 MIDDLEWARE = [
