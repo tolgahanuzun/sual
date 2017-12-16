@@ -13,6 +13,7 @@ Contents:
         Profile <profile.rst>
         Question <question.rst>
         Answer <answer.rst>
+        Vote - Topic <uptopic.rst>
 
 
 Indices and tables
