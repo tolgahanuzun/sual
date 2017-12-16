@@ -61,6 +61,7 @@ class UserLogoutAPIView(APIView):
         return Response(status=status.HTTP_200_OK)
 
 class UserGetAPI(APIView):
+    permission_classes = ()
 
     def get(self, request, username):
         serializer_users = UserProfileSerializer(UserProfile.objects.filter(user__username=username), many=True)
