@@ -27,6 +27,8 @@ class Vote_Answer(models.Model):
     def __str__(self):
         return "%s - %s" % (self.user, self.answer)
 
+    class Meta:
+        unique_together = ('user', 'answer',)
 
 class Topic_Questions(models.Model):
     "Questions in Topic data"
