@@ -22,15 +22,19 @@ class VoteCreateListAPIView(ListCreateAPIView):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-   
+
         answer = Answers.objects.get(id=self.request.data['answer'])
+        last_vote = Vote_Answer.objects.filter(answer=answer, user=self.request.user)
+        last_vote.delete()
+
         serializer.save(user=self.request.user, answer=answer, type=self.request.data['type'])
         headers = self.get_success_headers(serializer.data)
-        import ipdb; ipdb.set_trace()
-        result = serializer.data; result.pop('user'); result.pop('answer')
+        
+
+        result = request.data
         upvote = len(Vote_Answer.objects.filter(type="True", answer=answer))
         downvote = len(Vote_Answer.objects.filter(type="False", answer=answer))
         result['vote'] = upvote - downvote
-        
+
         return Response(result, status=status.HTTP_201_CREATED, headers=headers)
 
