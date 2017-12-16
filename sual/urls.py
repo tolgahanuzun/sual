@@ -7,6 +7,7 @@ from profiles import views
 api_urls = [
     url(r'^users/', include('profiles.urls', namespace='users')),
     url(r'^', include('questions.urls', namespace='questions')),
+    url(r'^', include('uptopic.urls', namespace='uptopic')),
 ]
 
 urlpatterns = [
