@@ -18,6 +18,13 @@ class QuestionsSerializer(serializers.ModelSerializer):
         fields = ("user", "body", "date_created","id")
 
 
+class ClearQuestionsSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Questions
+        fields = ("user", "body", "date_created","id")
+
+
 class AnswersGETSerializer(serializers.ModelSerializer):
 
     class Meta:
