@@ -29,7 +29,6 @@ class VoteCreateListAPIView(ListCreateAPIView):
 
         serializer.save(user=self.request.user, answer=answer, type=self.request.data['type'])
         headers = self.get_success_headers(serializer.data)
-        
 
         result = request.data
         upvote = len(Vote_Answer.objects.filter(type="True", answer=answer))
@@ -37,4 +36,3 @@ class VoteCreateListAPIView(ListCreateAPIView):
         result['vote'] = upvote - downvote
 
         return Response(result, status=status.HTTP_201_CREATED, headers=headers)
-
