@@ -1,0 +1,71 @@
+Likes
+*****
+
+The resource for liking objects. There are multiple endpoints for different object types.
+
+Currently 2 object types are supported. These are:
+    * Posts
+    * Comments
+
+Endpoints:
+    * /api/posts/<id>/likes/
+    * /api/comments/<id>/likes/
+
+Get the users who liked a given object
+--------------------------------------
+
+Method: **GET**
+
+Endpoint: /api/<object_type>/<object_id>/likes/
+
+Example Request::
+
+    GET: /api/posts/2/likes/
+
+Response::
+
+    HTTP 200: Ok
+
+    {
+        "count": 1,
+        "next": null,
+        "previous": null,
+        "results": [{
+            "id": 4,
+            "full_name": "Justine Lorean",
+            "first_name": "Justine",
+            "small_avatar": null,
+        }]
+    }
+
+Like an object
+--------------
+
+Method: **POST**
+
+Endpoint: /api/<object_type>/<object_id>/likes/
+
+Example Request::
+
+    POST: /api/posts/2/likes/
+
+Response::
+
+    HTTP 200: Ok
+
+.. note:: Note that this endpoint will return HTTP 200 even if the user has liked this object before.
+
+Un-like an object
+-----------------
+
+Method: **DELETE**
+
+Endpoint: /api/<object_type>/<object_id>/likes/
+
+Example Request::
+
+    DELETE: /api/posts/2/likes/
+
+Response::
+
+    HTTP 204: No Content

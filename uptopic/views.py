@@ -9,11 +9,21 @@ from uptopic.serializers import TopicSerializer, VoteSerializer, TopicQuestionsS
 
 from questions.models import Answers
 
-class TopicListAPIView(ListAPIView):
+class TopicListAPIView(ListCreateAPIView):
     "its own objects"
     queryset = Topic.objects.all()
     serializer_class = TopicSerializer
     permission_classes = ()
+
+    def create(self, request, *args, **kwargs):
+        if request.user.is_authenticated():
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            self.perform_create(serializer)
+            headers = self.get_success_headers(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+        else:
+            return Response({"result":'You can not do this without signing in.'}, status=status.HTTP_401_UNAUTHORIZED)
 
 
 class TopicGetListAPIView(ListAPIView):
@@ -25,6 +35,9 @@ class TopicGetListAPIView(ListAPIView):
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
+        
+        if not queryset:
+            return Response({"result":"Topic or content not found!"}, status=status.HTTP_204_NO_CONTENT)
 
         page = self.paginate_queryset(queryset)
         if page is not None:
