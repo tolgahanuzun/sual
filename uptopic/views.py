@@ -5,7 +5,7 @@ from rest_framework.settings import api_settings
 from rest_framework import status
 
 from uptopic.models import Topic, Topic_Questions, Vote_Answer
-from uptopic.serializers import TopicSerializer, VoteSerializer
+from uptopic.serializers import TopicSerializer, VoteSerializer, TopicQuestionsSerializer
 
 from questions.models import Answers
 
@@ -14,6 +14,26 @@ class TopicListAPIView(ListAPIView):
     queryset = Topic.objects.all()
     serializer_class = TopicSerializer
     permission_classes = ()
+
+
+class TopicGetListAPIView(ListAPIView):
+    serializer_class = TopicQuestionsSerializer
+    permission_classes = ()
+
+    def get_queryset(self):
+        return Topic_Questions.objects.filter(topic=Topic.objects.filter(name__icontains=self.kwargs['key']))
+
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
 
 class VoteCreateListAPIView(ListCreateAPIView):
     "Vote create and Vote now data result"
