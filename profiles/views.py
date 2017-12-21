@@ -68,14 +68,17 @@ class UserGetAPI(APIView):
         serializer_questions = QuestionsSerializer(Questions.objects.filter(user__username=username), many=True)
 
         if serializer_users.data or False:
-            serializer = {'user_details':serializer_users.data[0], 'questions_details':serializer_questions.data[0]}
-
+            if serializer_questions.data or None:
+                serializer = {'user_details':serializer_users.data[0], 'questions_details':serializer_questions.data[0]}
+            else:
+                serializer = {'user_details':serializer_users.data[0], 'questions_details':'Null'}
+                
             return Response(
                 data=serializer
                 #status=status.HTTP_200_OK,
                 )
         else:
             return Response(
-                data={'errors':'No members found.'},
+                data = {'results':'No members found.'},
                 status=status.HTTP_400_BAD_REQUEST,
             )

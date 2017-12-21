@@ -23,7 +23,7 @@ class TopicListAPIView(ListCreateAPIView):
             headers = self.get_success_headers(serializer.data)
             return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
         else:
-            return Response({"result":'You can not do this without signing in.'}, status=status.HTTP_401_UNAUTHORIZED)
+            return Response({"results":'You can not do this without signing in.'}, status=status.HTTP_401_UNAUTHORIZED)
 
 
 class TopicGetListAPIView(ListAPIView):
@@ -37,7 +37,7 @@ class TopicGetListAPIView(ListAPIView):
         queryset = self.filter_queryset(self.get_queryset())
         
         if not queryset:
-            return Response({"result":"Topic or content not found!"}, status=status.HTTP_204_NO_CONTENT)
+            return Response({"results":"Topic or content not found!"}, status=status.HTTP_204_NO_CONTENT)
 
         page = self.paginate_queryset(queryset)
         if page is not None:
