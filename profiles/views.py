@@ -64,8 +64,8 @@ class UserGetAPI(APIView):
     permission_classes = ()
 
     def get(self, request, username):
-        serializer_users = UserProfileSerializer(UserProfile.objects.filter(user__username=username), many=True)
-        serializer_questions = QuestionsSerializer(Questions.objects.filter(user__username=username), many=True)
+        serializer_users = UserProfileSerializer(UserProfile.objects.filter(user__username__iregex=username), many=True)
+        serializer_questions = QuestionsSerializer(Questions.objects.filter(user__username__iregex=username), many=True)
 
         if serializer_users.data or False:
             if serializer_questions.data or None:
