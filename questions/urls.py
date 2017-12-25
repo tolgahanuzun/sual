@@ -3,7 +3,7 @@ from questions.views import QuestionsMeListAPIView, QuestionsListCreateAPIView, 
 AnswersListCreateAPIView, AnswersDetailAPIView
 
 urlpatterns = [
-    url(r'^question$', QuestionsListCreateAPIView.as_view(), name="list"),
+    url(r'^question/$', QuestionsListCreateAPIView.as_view(), name="list"),
     url(r'^question/me/$', QuestionsMeListAPIView.as_view(), name="me_list"),
     url(r'^question/(?P<pk>[0-9]+)/$', QuestionsDetailAPIView.as_view(), name="user-detail"),
 
