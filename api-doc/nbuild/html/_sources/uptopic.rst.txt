@@ -5,7 +5,7 @@ Question endpoints list.
 
 Endpoints:
     * /api/topic/
-    * /api/topic/<key>/
+    * /api/topics/<key>/
     * /api/vote/
 
 Topic List
@@ -100,11 +100,11 @@ Topic Get
 
 Method: **GET**
 
-Endpoint: /api/topic/<key>/
+Endpoint: /api/topics/<key>/
 
 Example Request::
 
-    GET: /api/topic/PyThoN/
+    GET: /api/topics/PyThoN/
 
 
 Response::
