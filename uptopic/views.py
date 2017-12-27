@@ -5,8 +5,8 @@ from rest_framework.settings import api_settings
 from rest_framework import status
 
 from uptopic.models import Topic, Topic_Questions, Vote_Answer
-from uptopic.serializers import TopicSerializer, VoteSerializer, TopicQuestionsSerializer
-
+from uptopic.serializers import TopicSerializer, VoteSerializer, TopicQuestionsSerializer, TopicSearceQuestionsSerializer
+from questions.serializers import ClearQuestionsSerializer
 from questions.models import Answers
 
 class TopicListAPIView(ListCreateAPIView):
@@ -29,23 +29,45 @@ class TopicListAPIView(ListCreateAPIView):
 class TopicGetListAPIView(ListAPIView):
     serializer_class = TopicQuestionsSerializer
     permission_classes = ()
+    pagination_class = None
 
     def get_queryset(self):
-        return Topic_Questions.objects.filter(topic=Topic.objects.filter(name__icontains=self.kwargs['key']))
+        return Topic.objects.filter(id=self.kwargs['id'])
+    
+    def sub_query_clear(self, data):
+        newdata = list()
+        for i in range(len(data)):
+            temps = data[i].questions
+            newdata.append(temps)
+            
+        return newdata
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
-        
         if not queryset:
             return Response({"results":"Topic or content not found!"}, status=status.HTTP_204_NO_CONTENT)
 
-        page = self.paginate_queryset(queryset)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            return self.get_paginated_response(serializer.data)
+        serializer_topic = self.get_serializer(queryset, many=True)
+        sub_query = Topic_Questions.objects.filter(topic=self.get_queryset()[0])
+        query_clear = self.sub_query_clear(sub_query)
+        serializer_questions = ClearQuestionsSerializer(query_clear, many=True)
 
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
+        if serializer_topic.data or False:
+            if serializer_questions.data or None:
+                serializer = {'topic_details':serializer_topic.data[0], 'questions_details':serializer_questions.data}
+            else:
+                serializer = {'topic_details':serializer_topic.data[0], 'questions_details':'Null'}
+
+            return Response(data=serializer)
+
+
+class TopicSourceListAPIView(ListAPIView):
+    serializer_class = TopicSerializer
+    permission_classes = ()
+    pagination_class = None
+
+    def get_queryset(self):
+        return Topic.objects.filter(name__icontains=self.kwargs['key'])
 
 
 class VoteCreateListAPIView(ListCreateAPIView):
