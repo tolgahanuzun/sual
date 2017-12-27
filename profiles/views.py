@@ -69,7 +69,7 @@ class UserGetAPI(APIView):
 
         if serializer_users.data or False:
             if serializer_questions.data or None:
-                serializer = {'user_details':serializer_users.data[0], 'questions_details':serializer_questions.data[0]}
+                serializer = {'user_details':serializer_users.data[0], 'questions_details':[serializer_questions.data[0]]}
             else:
                 serializer = {'user_details':serializer_users.data[0], 'questions_details':'Null'}
                 
