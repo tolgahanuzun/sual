@@ -5,8 +5,9 @@ Question endpoints list.
 
 Endpoints:
     * /api/topic/
+    * /api/topic/<id>/
     * /api/topics/<key>/
-    * /api/vote/
+    * /api/votes/
 
 Topic List
 --------------------------------------
@@ -95,7 +96,7 @@ Response::
 
 
 
-Topic Get
+Topic search
 --------------------------------------
 
 Method: **GET**
@@ -110,27 +111,28 @@ Example Request::
 Response::
 
     HTTP 200: OK
+
+    [
     {
-        "count": 1,
-        "next": null,
-        "previous": null,
-        "results": [
-            {
-                "topic": 1,
-                "questions": {
-                    "user": 1,
-                    "body": "Soru -1",
-                    "date_created": "2017-10-31T13:09:35.500606Z",
-                    "id": 1
-                }
-            }
-        ]
+        "id": 1,
+        "name": "Python",
+        "tittle": "Python Lang",
+        "about": "Python Lang Questions List",
+        "image": null
+    },
+    {
+        "id": 4,
+        "name": "python data",
+        "tittle": "data",
+        "about": "data",
+        "image": null
     }
+    ]
 
 
 Example Request::
 
-    GET: /api/topic/Go2/
+    GET: /api/topics/Go2/
 
 
 Response::
@@ -140,16 +142,60 @@ Response::
     "result": "Topic or content not found!"
     }
 
+
+Topic Get
+--------------------------------------
+
+Method: **GET**
+
+Endpoint: /api/topic/<id>/
+
+Example Request::
+
+    GET: /api/topics/1/
+
+
+Response::
+
+    HTTP 200: OK
+
+    {
+    "topic_details": {
+        "id": 1,
+        "name": "Python",
+        "tittle": "Python Lang",
+        "about": "Python Lang Questions List",
+        "image": null
+    },
+    "questions_details": [
+        {
+            "user": 1,
+            "body": "Soru -1",
+            "date_created": "2017-10-31T13:09:35.500606Z",
+            "id": 1
+        },
+        {
+            "user": 1,
+            "body": "New answer create",
+            "date_created": "2017-12-06T17:57:33.499951Z",
+            "id": 4
+        }
+    ]
+    }
+
+
+
+
 Answer Vote
 --------------------------------------
 
 Method: **POST**
 
-Endpoint: /api/vote/
+Endpoint: /api/votes/
 
 Example Request::
 
-    POST: /api/vote/
+    POST: /api/votes/
     
     Header:[{"key":"Authorization","value":"Token 5e4d6253cb7b9b19f7c8dd499c4385bb01bd4822"},
             {"key":"Content-Type","value":"application/json"}]

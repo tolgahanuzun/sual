@@ -69,6 +69,14 @@ class TopicSourceListAPIView(ListAPIView):
     def get_queryset(self):
         return Topic.objects.filter(name__icontains=self.kwargs['key'])
 
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+
+        if not queryset:
+            return Response({"results":"Topic or content not found!"}, status=status.HTTP_204_NO_CONTENT)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(data=serializer.data)
 
 class VoteCreateListAPIView(ListCreateAPIView):
     "Vote create and Vote now data result"
