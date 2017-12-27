@@ -13,13 +13,19 @@ class TopicSerializer(serializers.ModelSerializer):
         model = Topic
         fields = ("id", "name", "tittle", "about", "image")
 
-
 class TopicQuestionsSerializer(serializers.ModelSerializer):
-    questions = ClearQuestionsSerializer(read_only=True)
+    questions = ClearQuestionsSerializer(many=True,read_only=True)
+    
+    class Meta:
+        model = Topic
+        fields = ("id", "name", "tittle", "about", "image", "questions")
+
+class TopicSearceQuestionsSerializer(serializers.ModelSerializer):
+    topic = TopicSerializer(read_only=True)
 
     class Meta:
         model = Topic_Questions
-        fields = ("topic","questions")
+        fields = ("topic",)
 
 class VoteSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
