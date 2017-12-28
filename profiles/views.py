@@ -82,3 +82,9 @@ class UserGetAPI(APIView):
                 data = {'results':'No members found.'},
                 status=status.HTTP_400_BAD_REQUEST,
             )
+
+
+class TokenUsers(APIView):
+
+    def get(self, request, format=None):
+        return Response({'id':request.user.id})
