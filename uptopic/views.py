@@ -112,8 +112,11 @@ class UserFollowTopicAPIView(CreateModelMixin, DestroyModelMixin, GenericAPIView
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        topic = Topic.objects.get(id=self.request.data['topic_id'])
-        user = UserProfile.objects.get(user=self.request.user)
+        try:
+            topic = Topic.objects.get(id=self.request.data['topic_id'])
+            user = UserProfile.objects.get(user=self.request.user)
+        except ValueError:
+            return Response(status=status.HTTP_406_NOT_ACCEPTABLE)
 
         follow = Topic_Users.objects.filter(topic=topic, user=user)
         if follow:
@@ -124,10 +127,11 @@ class UserFollowTopicAPIView(CreateModelMixin, DestroyModelMixin, GenericAPIView
         return Response(status=status.HTTP_201_CREATED)
 
     def delete(self, request, *args, **kwargs):
-        topic = Topic.objects.filter(id=self.request.data['topic_id'])
-        user = UserProfile.objects.filter(user=self.request.user)
-        if not user:
-            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        try:
+            topic = Topic.objects.get(id=self.request.data['topic_id'])
+            user = UserProfile.objects.get(user=self.request.user)
+        except:
+            return Response(status=status.HTTP_406_NOT_ACCEPTABLE)
 
         follow = Topic_Users.objects.filter(topic=topic, user=user)
         if not follow:
