@@ -4,6 +4,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 from questions.models import Answers, Questions
+from profiles.models import UserProfile
 
 
 class Topic(models.Model):
@@ -30,6 +31,7 @@ class Vote_Answer(models.Model):
     class Meta:
         unique_together = ('user', 'answer',)
 
+
 class Topic_Questions(models.Model):
     "Questions in Topic data"
     topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
@@ -37,3 +39,15 @@ class Topic_Questions(models.Model):
 
     def __str__(self):
         return "%s - %s" % (self.topic, self.questions)
+
+
+class Topic_Users(models.Model):
+    "Users in Topic Following"
+    topic = models.ForeignKey(Topic, on_delete=models.CASCADE)
+    user = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "%s - %s" % (self.topic, self.user)
+
+    class Meta:
+        unique_together = ('user', 'topic',)
