@@ -5,8 +5,11 @@ Question endpoints list.
 
 Endpoints:
     * /api/topic/
+    * /api/topic/<id>/
     * /api/topics/<key>/
-    * /api/vote/
+    * /api/votes/
+    * /api/follow/topic/
+    * /api/follow/topic/<id>
 
 Topic List
 --------------------------------------
@@ -95,7 +98,7 @@ Response::
 
 
 
-Topic Get
+Topic search
 --------------------------------------
 
 Method: **GET**
@@ -110,27 +113,28 @@ Example Request::
 Response::
 
     HTTP 200: OK
+
+    [
     {
-        "count": 1,
-        "next": null,
-        "previous": null,
-        "results": [
-            {
-                "topic": 1,
-                "questions": {
-                    "user": 1,
-                    "body": "Soru -1",
-                    "date_created": "2017-10-31T13:09:35.500606Z",
-                    "id": 1
-                }
-            }
-        ]
+        "id": 1,
+        "name": "Python",
+        "tittle": "Python Lang",
+        "about": "Python Lang Questions List",
+        "image": null
+    },
+    {
+        "id": 4,
+        "name": "python data",
+        "tittle": "data",
+        "about": "data",
+        "image": null
     }
+    ]
 
 
 Example Request::
 
-    GET: /api/topic/Go2/
+    GET: /api/topics/Go2/
 
 
 Response::
@@ -140,16 +144,60 @@ Response::
     "result": "Topic or content not found!"
     }
 
+
+Topic Get
+--------------------------------------
+
+Method: **GET**
+
+Endpoint: /api/topic/<id>/
+
+Example Request::
+
+    GET: /api/topics/1/
+
+
+Response::
+
+    HTTP 200: OK
+
+    {
+    "topic_details": {
+        "id": 1,
+        "name": "Python",
+        "tittle": "Python Lang",
+        "about": "Python Lang Questions List",
+        "image": null
+    },
+    "questions_details": [
+        {
+            "user": 1,
+            "body": "Soru -1",
+            "date_created": "2017-10-31T13:09:35.500606Z",
+            "id": 1
+        },
+        {
+            "user": 1,
+            "body": "New answer create",
+            "date_created": "2017-12-06T17:57:33.499951Z",
+            "id": 4
+        }
+    ]
+    }
+
+
+
+
 Answer Vote
 --------------------------------------
 
 Method: **POST**
 
-Endpoint: /api/vote/
+Endpoint: /api/votes/
 
 Example Request::
 
-    POST: /api/vote/
+    POST: /api/votes/
     
     Header:[{"key":"Authorization","value":"Token 5e4d6253cb7b9b19f7c8dd499c4385bb01bd4822"},
             {"key":"Content-Type","value":"application/json"}]
@@ -170,3 +218,106 @@ Response::
         "answer": 1
     }
 
+User Topic Follow
+--------------------------------------
+
+Method: **Post**
+
+Endpoint: /api/follow/topic/
+
+Example Request::
+
+    POST: /api/follow/topic/
+
+    Header:[{"key":"Authorization","value":"Token 5e4d6253cb7b9b19f7c8dd499c4385bb01bd4822"},
+            {"key":"Content-Type","value":"application/json"}]
+    
+    Body:{"topic_id": 1}
+
+Response::
+
+    HTTP 201: Created
+
+Example Request::
+
+    POST: /api/follow/topic/
+
+    Header:[{"key":"Authorization","value":"Token 5e4d6253cb7b9b19f7c8dd499c4385bb01bd4822"},
+            {"key":"Content-Type","value":"application/json"}]
+    
+    Body:{"topic_id": 1}
+
+Response::
+
+    HTTP 406: NOT ACCEPTABLE
+
+
+User Topic Unfollow
+--------------------------------------
+
+Method: **DELETE**
+
+Endpoint: /api/follow/topic/
+
+Example Request::
+
+    DELETE: /api/follow/topic/
+
+    Header:[{"key":"Authorization","value":"Token 5e4d6253cb7b9b19f7c8dd499c4385bb01bd4822"},
+            {"key":"Content-Type","value":"application/json"}]
+    
+    Body:{"topic_id": 1}
+
+Response::
+
+    HTTP 204: Not Content
+    
+
+Example Request::
+
+    DELETE: /api/follow/topic/
+
+    Header:[{"key":"Authorization","value":"Token 5e4d6253cb7b9b19f7c8dd499c4385bb01bd4822"},
+            {"key":"Content-Type","value":"application/json"}]
+    
+    Body:{"topic_id": 1}
+
+Response::
+
+    HTTP 404: Not found
+    
+
+Topic in User List
+--------------------------------------
+
+Method: **GET**
+
+Endpoint: /api/follow/topic/<id>
+
+Example Request::
+
+    GET: /api/follow/topic/1
+
+
+Response::
+
+    HTTP 200: OK
+
+    [
+    {
+        "user": {
+            "id": 8,
+            "username": "tolgahanuzun122",
+            "email": "tolgahanuzun1222@gmail.com",
+            "date_joined": "2017-12-15T11:45:39.739057Z"
+        }
+    },
+    {
+        "user": {
+            "id": 5,
+            "username": "tolgahanuzun1",
+            "email": "tolgahanuzun2@gmail.com",
+            "date_joined": "2017-12-15T11:43:03.737737Z"
+        }
+    }
+    ]

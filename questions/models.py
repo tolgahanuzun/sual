@@ -21,7 +21,7 @@ class Answers(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     question = models.ForeignKey(Questions, on_delete=models.CASCADE)
 
-    body = models.TextField(max_length=300, blank=True, verbose_name="Body")
+    body = models.TextField(max_length=3000, blank=True, verbose_name="Body")
     date_created = models.DateTimeField(verbose_name="Date Created", auto_now_add=True)
 
     def __str__(self):
